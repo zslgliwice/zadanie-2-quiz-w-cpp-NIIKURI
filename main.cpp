@@ -4,51 +4,68 @@
 
 using namespace std;
 
-string imie;
-string odp;
+string name;
+string answer;
 
-int main()
-{
-    //https://cpp0x.pl/kursy/Kurs-WinAPI-C++/Roznosci/Kolory-w-konsoli/374
-    HANDLE uchwyt = GetStdHandle(STD_OUTPUT_HANDLE);
-    SetConsoleTextAttribute(uchwyt, 12);
-    cout << "\aPodaj imie: ";
-    cin >> imie;
-    int pkt = 0;
+void clearScreen() {
+    system("cls");
+}
 
-    system("cls");
-    cout<< "3";
-    Sleep(1000);
-    system("cls");
-    cout<< "3..2";
-    Sleep(1000);
-    system("cls");
-    cout<< "3..2..1..";
-    Sleep(1000);
-    system("cls");
-
-    cout << imie << " witaj w tescie z programowania\n";
-
-    cout << "Co to jest C++?"<<endl;
-    cout << "a) Piosenkarka"<<endl;
-    cout << "b) Jezyk programowania"<<endl;
-    cout << "c) Mlynek do herbaty"<<endl;
+void askQuestion(const string &question, const string &optionA, const string &optionB, const string &optionC, char correctAnswer, int &score) {
+    clearScreen();
+    cout << question << endl;
+    cout << "a) " << optionA << endl;
+    cout << "b) " << optionB << endl;
+    cout << "c) " << optionC << endl;
     cout << "Twoja odpowiedz: ";
-    cin >> odp;
-    if(odp == "b")
-    {
-        cout << "Poprawna odpowiedz!";
-        pkt++;
+    cin >> answer;
+
+    if (answer == correctAnswer) {
+        cout << "Dobra odpowiedz!" << endl;
+        score++;
+    } else {
+        cout << "Zle! Poprawna odpowiedz: '" << correctAnswer << "'." << endl;
     }
-    else
-    {
-        cout << "Zle! Jest to jezyk programowania!";
 
+    Sleep(2000);
+}
+
+int main() {
+    HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(consoleHandle, 9);
+    cout << "\aImie: ";
+    cin >> name;
+    int points = 0;
+
+    clearScreen();
+    cout << "3";
+    Sleep(1000);
+    clearScreen();
+    cout << "3..2";
+    Sleep(1000);
+    clearScreen();
+    cout << "3..2..1..";
+    Sleep(1000);
+    clearScreen();
+
+    cout << name << ", Witaj w quizie!!!" << endl;
+
+    askQuestion("Jaki kon widzi tak samo z przodu i z tylu?", " W okularach", "Slepy", "Spostrzegawczy", 'b', points);
+    askQuestion("Ktore kolo najmniej sie zuzywa na zakretach?", " Prawe przednie", "Lewe tylnie", "Zapasowe", 'c', points);
+    askQuestion("Jaki kolor jest najbardziej wystrzalowy?", "Granat", "Czern", "Czerwien", 'a', points);
+    askQuestion("Kto jest synem Twojego ojca, ale nie jest Twoim rodzenstwem?", "Adoptowany syn taty", "Ja", "Taka osoba nie moze istniec!", 'b', points);
+
+    clearScreen();
+    cout << "Gratulacje, ukonczyles quiz!" << endl;
+    cout << "Liczba punktow: " << points << "/4" << endl;
+
+    if (points == 1) {
+        cout << "Nastepnym razem bedzie lepiej!" << endl;
+    } else if (points >= 2 && points <= 4) {
+        cout << "DObra robota!" << endl;
+    } else if (points == 5) {
+        cout << "Jestes najlepszy!" << endl;
     }
-    Sleep(3000);
-    system("cls");
-
-
 
     return 0;
 }
